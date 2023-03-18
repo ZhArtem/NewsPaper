@@ -13,7 +13,7 @@ class Author(models.Model):
         #  суммарный рейтинг все.х комментариев автора;
         userRat = self.authorUser.comment_set.all().aggregate(sum=Sum('rating'))['sum']
         #  суммарный рейтинг всех комментариев к статьям автора.
-        commentRat = Comment.objects.filter(post__author=self.authorUser).aggregate(sum=Sum('rating'))['sum']
+        commentRat = Comment.objects.filter(commentPost__author=self).aggregate(sum=Sum('rating'))['sum']
         self.ratingAuthor = postRat * 3 + userRat + commentRat
         self.save()
 

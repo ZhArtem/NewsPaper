@@ -1,9 +1,13 @@
 {% extends 'default.html' %}
 
+{% load custom_filters %}
+
 {% block title %}
 News
 {% endblock title %}
 
 {% block content %}
-<h1>{{ post }}</h1>
+<h1>{{ post.title|censor }}</h1>
+<h3>{{ post.dateCreation|date:'d-m-Y H:i' }}</h3>
+<p>{{ post.text|censor }}</p>
 {% endblock content %}

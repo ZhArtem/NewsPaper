@@ -51,11 +51,11 @@ author2.update_rating()
 
 
 # Вывести username и рейтинг лучшего пользователя (применяя сортировку и возвращая поля первого объекта).
-best_user = Author.objects.order_by('-ratingAuthor')[0]
-print(f"Лучший пользователь: {best_user.authorUser.username} с рейтингом {best_user.ratingAuthor}")
+best_user = Author.objects.order_by('-ratingAuthor').values('authorUser__username', 'ratingAuthor').first()
+print(f"Лучший пользователь: {best_user['authorUser__username']} с рейтингом {best_user['ratingAuthor']}")
 
 # Вывести дату добавления, username автора, рейтинг, заголовок и превью лучшей статьи, основываясь на лайках/дислайках к этой статье.
-best_article = Post.objects.filter(categoryType='AR').order_by('-rating')[0]
+best_article = Post.objects.filter(categoryType='AR').order_by('-rating').first()
 print('Лучшая статья:', best_article.dateCreation.strftime('%d.%m.%y %H:%M:%S'), best_article.author.authorUser.username,
       best_article.title, best_article.preview(), sep='\n')
 

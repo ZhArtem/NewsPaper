@@ -3,40 +3,62 @@
 {% load custom_filters %}
 
 {% block title %}
-News
+    News
 {% endblock title %}
 
 {% block content %}
+
 {% if posts %}
-<h1>Последние новости</h1>
-<h3>(всего: {{ posts|length }})</h3>
-<table>
-    <tr>
-        <td>
-            Заголовок
-        </td>
-        <td>
-            Дата публикации
-        </td>
-        <td>
-            Содержание
-        </td>
-    </tr>
-    {% for post in posts %}
-    <tr>
-        <td>
-            {{ post.title|censor }}
-        </td>
-        <td>
-            {{ post.dateCreation|date:'d.m.Y' }}
-        </td>
-        <td>
-            {{ post.text|truncatechars:50|censor }}
-        </td>
-    </tr>
-    {% endfor %}
-</table>
+    <h1>Последние новости</h1>
+    <h3>(всего: {{ posts|length }})</h3>
+    <table>
+        <thead>
+            <th>
+                Заголовок
+            </th>
+            <th>
+                Дата публикации
+            </th>
+            <th>
+                Содержание
+            </th>
+        </thead>
+        {% for post in posts %}
+        <tr>
+            <td>
+                {{ post.title|censor }}
+            </td>
+            <td>
+                {{ post.dateCreation|date:'d.m.Y' }}
+            </td>
+            <td>
+                {{ post.text|truncatechars:50|censor }}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% if is_paginated %}
+        {% if page_obj.has_previous %}
+            <a href="?page=1">First</a>
+            <a href="?page={{ page_obj.previous_page_number }}">&#10094;</a>
+        {% endif %}
+        
+        {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+                <a>{{ num }}</a>
+            {% elif num > page_obj.number|add:'-2' and num < page_obj.number|add:'2' %}
+                <a href="?page={{ num }}">{{ num }}</a>
+            {% endif %}
+        {% endfor %}
+        
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">&#10095;</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+        {% endif %}
+    {% endif %}
+
 {% else %}
-<h2>Товаров нет!</h2>
+    <h2>Товаров нет!</h2>
 {% endif %}
+
 {% endblock content %}

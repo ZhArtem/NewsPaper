@@ -54,8 +54,6 @@ class Post(models.Model):
         return self.text[:124] + '...'
 
     
-
-
 class PostCategory(models.Model):
     postThrough = models.ForeignKey(Post, on_delete=models.CASCADE)
     categoryThrough = models.ForeignKey(Category, on_delete=models.CASCADE)

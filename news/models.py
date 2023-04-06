@@ -1,11 +1,15 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models import Sum
+from django.urls import reverse
 
 
 class Author(models.Model):
     authorUser = models.OneToOneField(User, on_delete=models.CASCADE)
     ratingAuthor = models.SmallIntegerField(default=0)
+
+    def __str__(self) -> str:
+        return self.authorUser.username
 
     def update_rating(self):     # Рейтинг состоит из следующих слагаемых:
         #  суммарный рейтинг статей автора умножается на 3;
@@ -21,23 +25,25 @@ class Author(models.Model):
 class Category(models.Model):
     categoryName = models.CharField(max_length=64, unique=True)
 
-
-ARTICLE = 'AR'
-NEWS = 'NW'
-POST_TYPE = [
-    (ARTICLE, 'Статья'),
-    (NEWS, 'Новость')
-    ]
+    def __str__(self) -> str:
+        return self.categoryName
 
 
 class Post(models.Model):
-    author = models.ForeignKey(Author, on_delete=models.CASCADE)
-    categoryType = models.CharField(max_length=2, choices=POST_TYPE, default=ARTICLE)
-    dateCreation = models.DateTimeField(auto_now_add=True)
-    postCategory = models.ManyToManyField(Category, through='PostCategory')
-    title = models.CharField(max_length=128)
-    text = models.TextField()
-    rating = models.SmallIntegerField(default=0)
+    ARTICLE = 'AR'
+    NEWS = 'NW'
+    POST_TYPE = [
+        (ARTICLE, 'Статья'),
+        (NEWS, 'Новость')
+        ]
+
+    author = models.ForeignKey(Author, on_delete=models.CASCADE, verbose_name='Автор')
+    categoryType = models.CharField(max_length=2, choices=POST_TYPE, default=ARTICLE, verbose_name='Тип')
+    dateCreation = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
+    postCategory = models.ManyToManyField(Category, through='PostCategory', verbose_name='Категория')
+    title = models.CharField(max_length=128, verbose_name='Заголовок')
+    text = models.TextField(verbose_name='Текст')
+    rating = models.SmallIntegerField(default=0, verbose_name='Рейтинг')
 
     def __str__(self) -> str:
         return f'{self.title} {self.preview()}'
@@ -52,6 +58,9 @@ class Post(models.Model):
 
     def preview(self):
         return self.text[:124] + '...'
+
+    def get_absolute_url(self):
+        return reverse('post_detail', kwargs={'pk' : self.pk})
 
     
 class PostCategory(models.Model):

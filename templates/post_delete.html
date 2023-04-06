@@ -1,0 +1,18 @@
+{% extends 'default.html' %}
+
+{% load custom_filters %}
+
+{% block title %} Product list {% endblock title %}
+
+{% block content %}
+<h2>Вы действительно хотите удалить эту статью?</h2>
+
+<h1>{{ post.title|censor }}</h1>
+<h3>{{ post.dateCreation|date:'d-m-Y H:i' }}</h3>
+<p>{{ post.text|censor }}</p>
+
+<form method="POST">
+    {% csrf_token %}
+    <input type="submit" value="подтвердить">
+</form>
+{% endblock content %}

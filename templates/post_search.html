@@ -9,7 +9,7 @@
 
 {% block content %}
 
-<h1>Последние новости</h1>
+<h1>Поиск новостей</h1>
 <h3>(всего новостей: {{ posts|length }})</h3>
 <form method='GET'>
     {{ filter.form }}
@@ -30,7 +30,7 @@
     {% for post in filter.qs %}
         <tr>
             <td>
-                {{ post.title|censor }}
+                <a href="{{ post.get_absolute_url }}">{{ post.title|censor }}</a>                
             </td>
             <td>
                 {{ post.dateCreation|date:'d.m.Y' }}

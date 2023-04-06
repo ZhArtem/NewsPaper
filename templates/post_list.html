@@ -10,7 +10,6 @@
 
 {% if posts %}
     <h1>Последние новости</h1>
-    <h3>(всего: {{ posts|length }})</h3>
     <table>
         <thead>
             <th>
@@ -26,7 +25,7 @@
         {% for post in posts %}
         <tr>
             <td>
-                {{ post.title|censor }}
+                <a href="{{ post.get_absolute_url }}">{{ post.title|censor }}</a>                
             </td>
             <td>
                 {{ post.dateCreation|date:'d.m.Y' }}

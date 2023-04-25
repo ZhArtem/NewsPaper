@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .forms import AddPostForm
 from .models import Post
@@ -38,7 +39,7 @@ class PostCreate(CreateView):
     form_class = AddPostForm
 
 
-class PostUpdate(UpdateView):
+class PostUpdate(LoginRequiredMixin, UpdateView):
     template_name = 'post_create.html'
     form_class = AddPostForm
 

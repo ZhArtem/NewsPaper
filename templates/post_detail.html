@@ -7,9 +7,16 @@ News
 {% endblock title %}
 
 {% block content %}
-<h1>{{ post.title|censor }}</h1>
-<a href="{% url 'post_update' post.id %}">Редактировать</a>
-<a href="{% url 'post_delete' post.id %}">Удалить</a>
-<h3>{{ post.dateCreation|date:'d-m-Y H:i' }}</h3>
-<p>{{ post.text|censor }}</p>
+<div class="card">
+    <div class="card-header">
+        <h1>{{ post.title|censor }}</h1>
+    </div>
+    <div class="card-body">
+        <span class="badge bg-info">{{ post.dateCreation|date:'d-m-Y H:i' }}</span>
+        <a href="{% url 'post_update' post.id %}">Редактировать</a>
+        <a href="{% url 'post_delete' post.id %}">Удалить</a>
+        <p>{{ post.text|censor }}</p>
+
+    </div>
+</div>
 {% endblock content %}

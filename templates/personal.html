@@ -1,0 +1,16 @@
+{% extends "default.html" %}
+
+{% block title %}
+    {{request.user.username}}
+{% endblock title %}
+
+{% block content %}
+    <h2>Страница авторизованного пользователя {{request.user.username}}</h2>
+    <div class="my-3">Персональная информация для пользователя {{request.user.username}}:</div>
+    <a class="btn btn-primary" href="{% url 'account_logout' %}">Выйти</a>
+    {% if is_not_authors %}
+        <a class="btn btn-info" href="{% url 'upgrade' %}">Хочу стать Автором!</a>
+    {% else %}
+        <h3>Вы в группе "Авторы"</h3>
+    {% endif %}
+{% endblock content %}

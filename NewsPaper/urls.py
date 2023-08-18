@@ -16,9 +16,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from news.views import PostsList, IndexView, upgrade_me
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('news/', include('news.urls')),
-    
+
+    path('', IndexView.as_view(), name='index'),
+    path('upgrade/', upgrade_me, name = 'upgrade'),
+
     path('accounts/', include('allauth.urls')),
 ]

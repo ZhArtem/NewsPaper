@@ -1,0 +1,37 @@
+{% extends 'default.html' %}
+
+{% load custom_filters %}
+
+{% block title %}
+    News by "{{ categoryName }}" category:
+{% endblock title %}
+
+{% block content %}
+{% if posts %}
+<h1>Статьи из категории "{{ categoryName }}"</h1>
+{% if is_not_subscribed %}
+    <a class="btn btn-primary" href="{% url 'subscribe' category.pk %}">Подписаться</a>
+{% else %}
+    <p>Вы подписаны на данную категорию.</p>
+{% endif %}
+<table class="table table-striped table-hover">
+    <thead>
+        <th scope="col">Заголовок</th>
+        <th scope="col">Дата публикации</th>
+        <th scope="col">Содержание</th>
+    </thead>
+    {% for post in posts %}
+    <tr>
+        <td><a href="{{ post.get_absolute_url }}">{{ post.title|censor }}</a></td>
+        <td>{{ post.dateCreation|date:'d.m.Y' }}</td>
+        <td>{{ post.text|truncatechars:50|censor }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% include 'parts/paginator.html' %}
+
+{% else %}
+<h2>Статей нет!</h2>
+{% endif %}
+{% endblock content %}

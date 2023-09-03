@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Здравствуй, {{subscriber.username}}. Новая статья в твоём любимом разделе!</h1>
+    <h2>Заголовок: {{ title }} </h2>
+    <h3>Текст:</h3>
+    <p>{{ text }}</p>
+    <h3>Ссылка:</h3>
+    <p><a href="http://127.0.0.1:8000{{ post.get_absolute_url }}">Читать статью</a></p>
+</body>
+</html>

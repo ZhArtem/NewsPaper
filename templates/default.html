@@ -30,10 +30,11 @@
                     <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">{{user.username}} |</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'account_logout' %}">Выйти</a></li>
                     {% else %}
-                    <li class="nav-item"><a class="nav-link" href="{% url 'account_signup' %}">Регистрация</a> | </li>
-                    <li class="nav-item"></li><a class="nav-link" href="{% url 'account_login' %}">Войти</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'account_signup' %}">Sign Up</a> | </li>
+                    <li class="nav-item"></li><a class="nav-link" href="{% url 'account_login' %}">Sign In</a></li>
                     {% endif %}
                     <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'news' %}">News</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'categories' %}">Categories</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'search' %}">Search</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'post_create' %}">Add post</a></li>
                 </ul>

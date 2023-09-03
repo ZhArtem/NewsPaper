@@ -1,0 +1,28 @@
+{% extends 'default.html' %}
+
+{% block title %}
+    Categories
+{% endblock title %}
+
+{% block content %}
+    {% if categories %}
+        <h1>Категории новостей</h1>
+        <table class="table table-striped table-hover">
+            <thead>
+                <th scope="col">Категория</th>
+                <th scope="col"></th>
+            </thead>
+            {% for category in categories %}
+            <tr>
+                <td><a href="{% url 'post_by_category' category.pk %}">{{ category.categoryName }}</a></td>
+                <td><a class="btn btn-primary" href="{% url 'subscribe' category.pk %}">Подписаться</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        {% include 'parts/paginator.html' %}
+
+    {% else %}
+        <h2>Категорий нет!</h2>
+    {% endif %}
+{% endblock content %}
